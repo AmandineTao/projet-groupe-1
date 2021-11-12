@@ -15,6 +15,15 @@ pipeline{
                 """
             }
         }
+    stage('Test') {
+      steps {
+        echo 'Testing...'
+        snykSecurity(
+          snykInstallation: 'Snyk',
+          snykTokenId: 'snyk_token',
+        )
+      }
+    }
         stage("run"){
 			agent any
             steps{
