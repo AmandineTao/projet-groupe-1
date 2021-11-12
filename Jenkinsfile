@@ -17,7 +17,7 @@ app-devops-projet
             agent any
             steps{
                 script{
-                    sh 'docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .'
+                    sh 'docker build -t ${USERNAME}/${IMAGE_NAME}:${IMAGE_TAG} .'
                 }
             }
         }
@@ -28,7 +28,7 @@ app-devops-projet
             steps{
                 script{
                     sh '''
-                        docker run --name ${CONTAINER_NAME} -d -p ${IMAGE_PORT}:8000 ${IMAGE_NAME}:${IMAGE_TAG}
+                        docker run --name ${CONTAINER_NAME} -d -p ${IMAGE_PORT}:8000 ${USERNAME}/${IMAGE_NAME}:${IMAGE_TAG}
                         sleep 5
                     ''' 
                 }
@@ -65,7 +65,7 @@ app-devops-projet
                 script {
                     sh '''
                        docker login -u ${USERNAME} -p ${PASSWORD}
-                       docker push ${IMAGE_NAME}:${IMAGE_TAG}
+                       docker push ${USERNAME}/${IMAGE_NAME}:${IMAGE_TAG}
                     '''
                 }
             }
