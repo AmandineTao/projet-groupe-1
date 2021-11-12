@@ -12,7 +12,6 @@ pipeline{
     agent none
 
     stages{
-        app-devops-projet
         stage ('Build Image'){
             agent any
             steps{
