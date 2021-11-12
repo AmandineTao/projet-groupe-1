@@ -29,7 +29,7 @@ pipeline{
            steps {
               script {
                 sh '''
-                    curl -sL http://172.17.0.1| grep -q 200
+                    curl -sL -w '%{http_code}\n' http://172.17.0.1:${IMAGE_PORT} -o /dev/null | grep -q 200
                 '''
               }
            }
