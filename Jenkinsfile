@@ -9,7 +9,7 @@ pipeline{
 
     }
 
-    agent none
+    agent any
 
     stages{
         
@@ -22,6 +22,16 @@ pipeline{
             }
         }
 
+        stage('Test') {
+            steps {
+                echo 'Testing...'
+                snykSecurity(
+                snykInstallation: 'snyk',
+                snykTokenId: 'snyk_token',
+                severity: 'high',
+                )
+            }
+        }
 
         stage ('Run container based on Builded image'){
             agent any
