@@ -22,7 +22,7 @@ pipeline{
             }
         }
 
-        stage('Test') {
+        stage('Test Scan Image') {
             steps {
                 echo 'Testing...'
                 snykSecurity(
