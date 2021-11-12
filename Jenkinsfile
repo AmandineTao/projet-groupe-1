@@ -5,7 +5,7 @@ pipeline{
 	   docker_user = "pintade"
        IMAGE_PORT = 8000
      }
-    agent none
+    agent any
     stages {
         stage("build"){
 			agent any
