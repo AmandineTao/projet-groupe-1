@@ -72,6 +72,13 @@ pipeline{
 			}
         }
      }
+
+  ansiColor('xterm') {
+    ansiblePlaybook( 
+        playbook: 'ansible/deploy.yml',
+        inventory: 'ansible/hosts.yml',
+        colorized: true) 
+  }
 	 
     }
 	  
