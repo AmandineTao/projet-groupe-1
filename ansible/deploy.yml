@@ -1,5 +1,5 @@
 ---
-- hosts: prod
+- hosts: client
   name: preinstall
   vars_files:
     - files/secrets/credentials.yaml
