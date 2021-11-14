@@ -2,12 +2,12 @@
 - name: Install pip utils
   yum:
     name: "{{ packages }}"
-      vars:
-  packages:
-  - yum-utils
-  - device-mapper-persistent-data
-  - lvm2
-  - python3-pip
+  vars:
+    packages:
+    - yum-utils
+    - device-mapper-persistent-data
+    - lvm2
+    - python3-pip
   become: yes
 
 - name: Add Docker repo
@@ -49,11 +49,11 @@
 - name: Install pip utils
   yum:
     name: "{{ packages }}"
-      vars:
-  packages:
-  - docker-ce 
-  - docker-ce-cli 
-  - containerd.io
+  vars:
+    packages:
+    - docker-ce 
+    - docker-ce-cli 
+    - containerd.io
   become: yes
 
 - name: Install Docker Module for Python
