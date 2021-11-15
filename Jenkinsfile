@@ -77,23 +77,23 @@ pipeline{
         steps {
             script {
               sh '''
-                ansible --version
+                ansible-playbook -i ansible/deploy.yml ansible/hosts.yml
               '''
             }
         }
     }
 
-  stage('Ansible') {
-    agent any
-    steps {
-      ansiColor('xterm') {
-        ansiblePlaybook( 
-            playbook: 'ansible/deploy.yml',
-            inventory: 'ansible/hosts.yml',
-            colorized: true) 
-      }
-    }
-  }
+  // stage('Ansible') {
+  //   agent any
+  //   steps {
+  //     ansiColor('xterm') {
+  //       ansiblePlaybook( 
+  //           playbook: 'ansible/deploy.yml',
+  //           inventory: 'ansible/hosts.yml',
+  //           colorized: true) 
+  //     }
+  //   }
+  // }
 	 
     }
 	  
