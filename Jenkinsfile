@@ -77,7 +77,7 @@ pipeline{
         steps {
             script {
               sh '''
-                ansible-galaxy collection install -r ./ansible/collections/requirements.yml -p .ansible/collections/
+                ansible --version
               '''
             }
         }
