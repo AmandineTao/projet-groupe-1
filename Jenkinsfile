@@ -58,19 +58,19 @@ pipeline{
           }
      }
 	 
-	 stage('Push docker') {
-        agent any
-         steps {
-           script {
-            withCredentials([string(credentialsId: 'docker_pw', variable: 'SECRET')]) {
-              sh '''
-                docker login -u ${docker_user} -p ${SECRET}
-                docker image push ${docker_user}/${IMAGE_NAME}:${IMAGE_TAG}
-              '''
-            }
-			}
-        }
-     }
+	//  stage('Push docker') {
+  //       agent any
+  //        steps {
+  //          script {
+  //           withCredentials([string(credentialsId: 'docker_pw', variable: 'SECRET')]) {
+  //             sh '''
+  //               docker login -u ${docker_user} -p ${SECRET}
+  //               docker image push ${docker_user}/${IMAGE_NAME}:${IMAGE_TAG}
+  //             '''
+  //           }
+	// 		}
+  //       }
+  //    }
 
   stage('install galacy') {
         agent any
