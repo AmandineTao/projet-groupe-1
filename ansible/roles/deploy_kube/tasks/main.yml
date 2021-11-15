@@ -1,4 +1,32 @@
 ---
+- name: Setup compose dir structure
+  file:
+    path: "{{ project_dir }}"
+    state: directory
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+    recurse: yes
+    mode: 0775
+  become: yes
+
+- name: nodejs_app.yml
+  template:
+    src: nodejs_app.yml
+    dest: "{{ project_dir }}/nodejs_app.yml"
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+    mode: 0775
+  become: yes
+
+- name: nodeport.yml
+  template:
+    src: nodeport.yml
+    dest: "{{ project_dir }}/nodeport.yml"
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+    mode: 0775
+  become: yes
+
 - name: Create a k8s namespace
   community.kubernetes.k8s:
     name: dev
@@ -9,9 +37,9 @@
 - name: Create a Deployment by reading the definition from a local file
   community.kubernetes.k8s:
     state: present
-    src: nodejs_app.yml
+    src: "{{ project_dir }}/nodejs_app.yml"
 
 - name: Create a Service by reading the definition from a local file
   community.kubernetes.k8s:
     state: present
-    src: nodejs_app.yml
+    src: "{{ project_dir }}/nodeport.yml"
