@@ -10,4 +10,4 @@ spec:
      port: 8000
      nodePort: 30009
   selector:
-    app: nodejs_app
+    app: nodejs-app
