@@ -1,3 +1,4 @@
+---
 - name: Create a k8s namespace
   community.kubernetes.k8s:
     name: dev

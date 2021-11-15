@@ -1,6 +1,5 @@
 collections:
   - name: community.docker
     source: https://galaxy.ansible.com
-collections:
   - name: community.kubernetes
     source: https://galaxy.ansible.com
