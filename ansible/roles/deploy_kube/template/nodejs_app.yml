@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs_app
+  namespace: dev
+  labels:
+    app: nodejs_app
+    env: prod
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nodejs_app
+  template:
+    metadata:
+      name: pod-nodejs_app
+      labels:
+        app: nodejs_app
+    spec:
+      containers:
+        - name: nodejs_app
+          image: pintade/diranenodejs
+          ports:    
+            - containerPort: 80

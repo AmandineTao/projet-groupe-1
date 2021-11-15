@@ -1,7 +1,7 @@
 ---
-- hosts: client
+- hosts: server
   name: preinstall
   vars_files:
     - files/secrets/credentials.yaml
   roles:
-  - install_docker
+  - deploy_kube
