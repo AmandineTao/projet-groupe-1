@@ -58,42 +58,42 @@ pipeline{
           }
      }
 	 
-	//  stage('Push docker') {
-  //       agent any
-  //        steps {
-  //          script {
-  //           withCredentials([string(credentialsId: 'docker_pw', variable: 'SECRET')]) {
-  //             sh '''
-  //               docker login -u ${docker_user} -p ${SECRET}
-  //               docker image push ${docker_user}/${IMAGE_NAME}:${IMAGE_TAG}
-  //             '''
-  //           }
-	// 		}
-  //       }
-  //    }
-
-  stage('install galacy') {
+	 stage('Push docker') {
         agent any
-        steps {
-            script {
+         steps {
+           script {
+            withCredentials([string(credentialsId: 'docker_pw', variable: 'SECRET')]) {
               sh '''
-                ansible-playbook -i ./ansible/hosts.yml ./ansible/deploy.yml --become --become-user=root
+                docker login -u ${docker_user} -p ${SECRET}
+                docker image push ${docker_user}/${IMAGE_NAME}:${IMAGE_TAG}
               '''
             }
+			}
         }
-    }
+     }
 
-  // stage('Ansible') {
-  //   agent any
-  //   steps {
-  //     ansiColor('xterm') {
-  //       ansiblePlaybook( 
-  //           playbook: 'ansible/deploy.yml',
-  //           inventory: 'ansible/hosts.yml',
-  //           colorized: true) 
-  //     }
+  // stage('install galacy') {
+  //       agent any
+  //       steps {
+  //           script {
+  //             sh '''
+  //               ansible-playbook -i ./ansible/hosts.yml ./ansible/deploy.yml --become --become-user=root
+  //             '''
+  //           }
+  //       }
   //   }
-  // }
+
+  stage('Ansible') {
+    agent any
+    steps {
+      ansiColor('xterm') {
+        ansiblePlaybook( 
+            playbook: 'ansible/deploy.yml',
+            inventory: 'ansible/hosts.yml',
+            colorized: true) 
+      }
+    }
+  }
 	 
     }
 	  
