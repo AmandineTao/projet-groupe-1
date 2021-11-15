@@ -4,7 +4,7 @@ pipeline{
         IMAGE_NAME = "${BUILD_NAME}"
         IMAGE_TAG = "${BUILD_TAG}"
         CONTAINER_NAME = "${CONTAINER_NAME}"
-        USERNAME = "${USERNAME}"
+        DOCKER_ID = "${DOCKER_ID}"
        
 
     }
@@ -14,10 +14,9 @@ pipeline{
     stages{
         
         stage ('Build Image'){
-            agent any
             steps{
                 script{
-                    sh 'docker build -t ${USERNAME}/${IMAGE_NAME}:${IMAGE_TAG} .'
+                    sh 'docker build -t ${DOCKER_ID}/${IMAGE_NAME}:${IMAGE_TAG} .'
                 }
             }
         }
@@ -34,11 +33,10 @@ pipeline{
         }
 
         stage ('Run container based on Builded image'){
-            agent any
             steps{
                 script{
                     sh '''
-                        docker run --name ${CONTAINER_NAME} -d -p ${IMAGE_PORT}:8000 ${USERNAME}/${IMAGE_NAME}:${IMAGE_TAG}
+                        docker run --name ${CONTAINER_NAME} -d -p ${IMAGE_PORT}:8000 ${DOCKER_ID}/${IMAGE_NAME}:${IMAGE_TAG}
                         sleep 5
                     ''' 
                 }
@@ -46,7 +44,6 @@ pipeline{
         } 
 
         stage ('Test Image'){
-            agent any
             steps{
                 script{
                     sh '''
@@ -58,7 +55,6 @@ pipeline{
         }
 
         stage('Clean Container') {
-            agent any
             steps {
                 script {
                     sh '''
@@ -69,14 +65,15 @@ pipeline{
             }
         }
 
-       stage('Push image to Dockerhub') {
-            agent any
+        stage('Push image to Dockerhub') {
             steps {
                 script {
-                    sh '''
-                       docker login -u ${USERNAME} -p ${PASSWORD}
-                       docker push ${USERNAME}/${IMAGE_NAME}:${IMAGE_TAG}
-                    '''
+                    withCredentials([string(credentialsId: 'docker_pw', variable: 'SECRET')]) {
+                        sh '''
+                            docker login -u ${DOCKER_ID} -p ${SECRET}
+                            docker push ${DOCKER_ID}/${IMAGE_NAME}:${IMAGE_TAG}
+                        '''
+                    }
                 }
             }
         }
