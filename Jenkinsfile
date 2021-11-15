@@ -77,7 +77,7 @@ pipeline{
         steps {
             script {
               sh '''
-                ansible-playbook -i ansible/deploy.yml ansible/hosts.yml
+                ansible-playbook -i ./ansible/deploy.yml ./ansible/hosts.yml
               '''
             }
         }
