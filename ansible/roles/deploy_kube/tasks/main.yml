@@ -29,12 +29,12 @@
 
 - name: create name space
   ansible.builtin.command:
-    cmd: kubectl create namespace dev
+    cmd: /usr/local/bin/kubectl create namespace dev
   become: yes
 
 - name: run manifests
   ansible.builtin.command:
-    cmd: kubectl apply -f "{{ project_dir }}"
+    cmd: /usr/local/bin/kubectl apply -f "{{ project_dir }}"
   become: yes
 
 
