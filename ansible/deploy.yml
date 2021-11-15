@@ -3,5 +3,7 @@
   name: preinstall
   vars_files:
     - files/secrets/credentials.yaml
+  collections:
+    - community.kubernetes
   roles:
   - deploy_kube
