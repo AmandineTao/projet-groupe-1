@@ -3,7 +3,5 @@
   name: preinstall
   vars_files:
     - files/secrets/credentials.yaml
-  vars:
-    ansible_python_interpreter: /usr/bin/python3
   roles:
   - deploy_kube
