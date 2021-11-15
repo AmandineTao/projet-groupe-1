@@ -71,6 +71,18 @@ pipeline{
 			}
         }
      }
+
+  stage('install galaxy') {
+        agent any
+        steps {
+            script {
+              sh '''
+                ansible-galaxy collection install -r ./ansible/collections/requirements.yml
+              '''
+            }
+        }
+    }
+
   stage('Ansible') {
     agent any
     steps {
