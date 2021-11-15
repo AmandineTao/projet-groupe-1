@@ -11,7 +11,7 @@
 
 - name: nodejs_app.yml
   template:
-    src: nodejs_app.yml
+    src: ./template/nodejs_app.yml
     dest: "{{ project_dir }}/nodejs_app.yml"
     owner: "{{ system_user }}"
     group: "{{ system_user }}"
@@ -20,7 +20,7 @@
 
 - name: nodeport.yml
   template:
-    src: nodeport.yml
+    src: ./template/nodeport.yml
     dest: "{{ project_dir }}/nodeport.yml"
     owner: "{{ system_user }}"
     group: "{{ system_user }}"
