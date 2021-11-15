@@ -77,7 +77,7 @@ pipeline{
         steps {
             script {
               sh '''
-                ansible-playbook -i ./ansible/hosts.yml ./ansible/deploy.yml -M /usr/share/ansible/collections/ 
+                ansible-playbook -i ./ansible/hosts.yml ./ansible/deploy.yml -M /usr/share/ansible/collections/ansible_collections
               '''
             }
         }
