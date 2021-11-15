@@ -1,0 +1,57 @@
+---
+- name: Setup compose dir structure
+  file:
+    path: "{{ project_dir }}"
+    state: directory
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+    recurse: yes
+    mode: 0775
+  become: yes
+
+- name: nodejs_app.yml
+  template:
+    src: ./template/nodejs_app.yml
+    dest: "{{ project_dir }}/nodejs_app.yml"
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+    mode: 0775
+  become: yes
+
+- name: nodeport.yml
+  template:
+    src: ./template/nodeport.yml
+    dest: "{{ project_dir }}/nodeport.yml"
+    owner: "{{ system_user }}"
+    group: "{{ system_user }}"
+    mode: 0775
+  become: yes
+
+# - name: create name space
+#   ansible.builtin.command:
+#     cmd: /usr/local/bin/kubectl create namespace dev
+#   become: yes
+
+# - name: run manifests
+#   ansible.builtin.command:
+#     cmd: /usr/local/bin/kubectl apply -f "{{ project_dir }}"
+#   become: yes
+
+
+
+- name: Create a k8s namespace
+  community.kubernetes.k8s:
+    name: dev
+    api_version: v1
+    kind: Namespace
+    state: present
+
+- name: Create a Deployment by reading the definition from a local file
+  community.kubernetes.k8s:
+    state: present
+    src: "{{ project_dir }}/nodejs_app.yml"
+
+- name: Create a Service by reading the definition from a local file
+  community.kubernetes.k8s:
+    state: present
+    src: "{{ project_dir }}/nodeport.yml"
