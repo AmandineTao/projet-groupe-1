@@ -92,7 +92,7 @@ pipeline{
               playbook: 'ansible/deploy.yml',
               inventory: 'ansible/hosts.yml',
               colorized: true,
-              extras: "--vault-password-file ${SECRET}"
+              extras: "--vault-password-file ${SECRET}",
               extraVars: [
                 namespace_default: 'dev',
                 nodeport_default: 30009
