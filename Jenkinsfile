@@ -2,7 +2,7 @@ pipeline{
      environment {
        IMAGE_NAME = "diranenodejs"
        IMAGE_TAG = "latest"
-	   docker_user = "pintade"
+	     docker_user = "pintade"
        IMAGE_PORT = 8000
      }
     agent any
@@ -15,6 +15,7 @@ pipeline{
                 """
             }
         }
+
     stage('Scan with Snyk') {
       steps {
         echo 'Testing...'
@@ -93,7 +94,7 @@ pipeline{
     }
   }
 
-	stage('Test curl on localhost') {
+	stage('Test curl on node dev') {
            agent any
            steps {
               script {
