@@ -1,82 +1,134 @@
 pipeline{
-    
-     environment{
-        IMAGE_NAME = "${BUILD_NAME}"
-        IMAGE_TAG = "${BUILD_TAG}"
-        CONTAINER_NAME = "${CONTAINER_NAME}"
-        DOCKER_ID = "${DOCKER_ID}"
-       
-
-    }
-
+     environment {
+       IMAGE_NAME = "diranenodejs"
+       IMAGE_TAG = "latest"
+	     docker_user = "pintade"
+       IMAGE_PORT = 8000
+     }
     agent any
-
-    stages{
-        
-        stage ('Build Image'){
-            steps{
-                script{
-                    sh 'docker build -t ${DOCKER_ID}/${IMAGE_NAME}:${IMAGE_TAG} .'
-                }
-            }
-        }
-
-        stage('Test Scan Image') {
+    stages {
+        stage("Build Docker image"){
+			agent any
             steps {
-                echo 'Testing...'
-                snykSecurity(
-                snykInstallation: 'snyk',
-                snykTokenId: 'snyk_token',
-                severity: 'high',
-                )
+                sh """
+                    docker build -t ${docker_user}/${IMAGE_NAME}:${IMAGE_TAG} .
+                """
             }
         }
 
-        stage ('Run container based on Builded image'){
-            steps{
-                script{
-                    sh '''
-                        docker run --name ${CONTAINER_NAME} -d -p ${IMAGE_PORT}:8000 ${DOCKER_ID}/${IMAGE_NAME}:${IMAGE_TAG}
-                        sleep 5
-                    ''' 
-                }
-            }
-        } 
-
-        stage ('Test Image'){
-            steps{
-                script{
-                    sh '''
-                       #curl http://172.17.0.1 | grep -q "Présentation"
-                       curl -sL -w '%{http_code}\n' http://172.17.0.1:${IMAGE_PORT} -o /dev/null | grep -q 200
-                    '''
-                }
-            }
-        }
-
-        stage('Clean Container') {
-            steps {
-                script {
-                    sh '''
-                       docker stop ${CONTAINER_NAME}
-                       docker rm ${CONTAINER_NAME}
-                    '''
-                }
-            }
-        }
-
-        stage('Push image to Dockerhub') {
-            steps {
-                script {
-                    withCredentials([string(credentialsId: 'docker_pw', variable: 'SECRET')]) {
-                        sh '''
-                            docker login -u ${DOCKER_ID} -p ${SECRET}
-                            docker push ${DOCKER_ID}/${IMAGE_NAME}:${IMAGE_TAG}
-                        '''
-                    }
-                }
-            }
-        }
-
+    stage('Scan with Snyk') {
+      steps {
+        echo 'Testing...'
+        snykSecurity(
+          snykInstallation: 'Snyk',
+          snykTokenId: 'snyk_token',
+          severity: 'high',
+        )
+      }
     }
+
+    stage("Run docker image"){
+			agent any
+            steps{
+                sh """
+                    docker run --name $IMAGE_NAME -d -p ${IMAGE_PORT}:8000 ${docker_user}/${IMAGE_NAME}:${IMAGE_TAG}
+                """
+            }
+        }
+		
+	stage('Test curl on localhost') {
+           agent any
+           steps {
+              script {
+                sh '''
+                    sleep 10
+                    curl -sL -w '%{http_code}\n' http://172.17.0.1:${IMAGE_PORT} -o /dev/null | grep -q 200
+                '''
+              }
+           }
+		   }
+		
+	stage('Clean Container') {
+          agent any
+          steps {
+             script {
+               sh '''
+                 docker stop $IMAGE_NAME
+                 docker rm $IMAGE_NAME
+               '''
+             }
+          }
+     }
+	 
+	 stage('Push image on docker') {
+        agent any
+         steps {
+           script {
+            withCredentials([string(credentialsId: 'docker_pw', variable: 'SECRET')]) {
+              sh '''
+                docker login -u ${docker_user} -p ${SECRET}
+                docker image push ${docker_user}/${IMAGE_NAME}:${IMAGE_TAG}
+              '''
+            }
+			}
+        }
+     }
+
+  stage('Ansible dev') {
+    agent any
+    steps {
+      withCredentials([file(credentialsId: 'pass_playbook_nodejs', variable: 'SECRET')]) {
+        ansiColor('xterm') {
+          ansiblePlaybook( 
+              playbook: 'ansible/deploy.yml',
+              inventory: 'ansible/hosts.yml',
+              colorized: true,
+              extras: "--vault-password-file ${SECRET}",
+              extraVars: [
+                namespace_default: 'dev',
+                nodeport_default: 30009,
+                node_Name: 'node2'
+          ]) 
+        }
+      }
+    }
+  }
+
+	stage('Test curl on node dev') {
+           agent any
+           steps {
+              script {
+                sh '''
+                    sleep 10
+                    curl -sL -w '%{http_code}\n' http://192.168.99.11:30009 -o /dev/null | grep -q 200
+                '''
+              }
+           }
+		   }
+
+  stage('Ansible prod') {
+    agent any
+    steps {
+      withCredentials([file(credentialsId: 'pass_playbook_nodejs', variable: 'SECRET')]) {
+        ansiColor('xterm') {
+          ansiblePlaybook( 
+              playbook: 'ansible/deploy.yml',
+              inventory: 'ansible/hosts.yml',
+              colorized: true,
+              extras: "--vault-password-file ${SECRET}",
+              extraVars: [
+                namespace_default: 'prod',
+                nodeport_default: 30010,
+                node_Name: 'node3'
+          ]) 
+        }
+      }
+    }
+  }
+	 
+    }
+	  
+
+	
+	
 }

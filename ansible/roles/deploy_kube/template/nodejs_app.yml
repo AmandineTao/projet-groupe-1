@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nodejs-app
-  namespace: dev
+  namespace: {{ namespace_default }}
   labels:
     app: nodejs-app
     env: dev
@@ -22,3 +22,4 @@ spec:
           image: pintade/diranenodejs
           ports:    
             - containerPort: 8000
+      nodeName: {{ node_Name }}

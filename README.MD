@@ -1,3 +1,5 @@
+[![Build Status](http://192.168.99.10:8080/buildStatus/icon?job=build_app)](http://192.168.99.10:8080/job/build_app/)
+
 # Group 1 : eazytraining node's app CICD
 
 ## 1- Goal
