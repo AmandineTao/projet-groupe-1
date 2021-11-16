@@ -90,7 +90,11 @@ pipeline{
         ansiblePlaybook( 
             playbook: 'ansible/deploy.yml',
             inventory: 'ansible/hosts.yml',
-            colorized: true) 
+            colorized: true,
+            extraVars: [
+              namespace_default: 'dev',
+              nodeport_default: 30009
+        ]) 
       }
     }
   }
