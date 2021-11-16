@@ -106,6 +106,13 @@ pipeline{
            }
 		   }
 
+  stage("Run Jmeter") {
+    agent any
+    steps {
+      bzt "./jmeter/plan.jmx"
+    }
+  }
+
   stage('Ansible prod') {
     agent any
     steps {
@@ -125,6 +132,7 @@ pipeline{
       }
     }
   }
+
 	 
     }
 	  
