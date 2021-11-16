@@ -1,8 +1,8 @@
 pipeline{
      environment {
-       IMAGE_NAME = "diranenodejs"
+       IMAGE_NAME = "node_app_devops"
        IMAGE_TAG = "latest"
-	     docker_user = "pintade"
+	     docker_user = "matao39"
        IMAGE_PORT = 8000
      }
     agent any
