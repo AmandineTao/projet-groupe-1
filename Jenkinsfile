@@ -7,7 +7,7 @@ pipeline{
      }
     agent any
     stages {
-        stage("build"){
+        stage("Build Docker image"){
 			agent any
             steps {
                 sh """
@@ -15,7 +15,7 @@ pipeline{
                 """
             }
         }
-    stage('Test') {
+    stage('Scan with Snyk') {
       steps {
         echo 'Testing...'
         snykSecurity(
@@ -25,7 +25,8 @@ pipeline{
         )
       }
     }
-        stage("run"){
+
+    stage("Run docker image"){
 			agent any
             steps{
                 sh """
@@ -34,7 +35,7 @@ pipeline{
             }
         }
 		
-	stage('Test image') {
+	stage('Test curl on localhost') {
            agent any
            steps {
               script {
@@ -58,7 +59,7 @@ pipeline{
           }
      }
 	 
-	 stage('Push docker') {
+	 stage('Push image on docker') {
         agent any
          steps {
            script {
@@ -71,17 +72,6 @@ pipeline{
 			}
         }
      }
-
-  // stage('install galacy') {
-  //       agent any
-  //       steps {
-  //           script {
-  //             sh '''
-  //               ansible-playbook -i ./ansible/hosts.yml ./ansible/deploy.yml --become --become-user=root
-  //             '''
-  //           }
-  //       }
-  //   }
 
   stage('Ansible dev') {
     agent any
@@ -102,6 +92,18 @@ pipeline{
       }
     }
   }
+
+	stage('Test curl on localhost') {
+           agent any
+           steps {
+              script {
+                sh '''
+                    sleep 10
+                    curl -sL -w '%{http_code}\n' http://192.168.99.11:30009 -o /dev/null | grep -q 200
+                '''
+              }
+           }
+		   }
 
   stage('Ansible prod') {
     agent any
