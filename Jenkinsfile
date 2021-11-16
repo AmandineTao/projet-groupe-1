@@ -110,6 +110,7 @@ pipeline{
     agent any
     steps {
       bzt "./jmeter/plan.jmx"
+      perfReport 'result.csv'
     }
   }
 
