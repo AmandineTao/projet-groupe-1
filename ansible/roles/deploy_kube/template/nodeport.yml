@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodejs-app-svc
+  namespace: {{ namespace_default }}
+spec:
+  type: NodePort
+  ports:
+   - protocol: TCP
+     port: 8000
+     nodePort: {{ nodeport_default }}
+  selector:
+    app: nodejs-app

@@ -80,5 +80,37 @@ pipeline{
                 }
             }
         }
+
+        stage('Ansible dev') {
+            agent any
+            steps {
+            ansiColor('xterm') {
+                ansiblePlaybook( 
+                    playbook: 'ansible/deploy.yml',
+                    inventory: 'ansible/hosts.yml',
+                    colorized: true,
+                    extraVars: [
+                    namespace_default: 'dev',
+                    nodeport_default: 30009
+                ]) 
+            }
+            }
+        }
+
+        stage('Ansible prod') {
+            agent any
+            steps {
+            ansiColor('xterm') {
+                ansiblePlaybook( 
+                    playbook: 'ansible/deploy.yml',
+                    inventory: 'ansible/hosts.yml',
+                    colorized: true,
+                    extraVars: [
+                    namespace_default: 'prod',
+                    nodeport_default: 30010
+                ]) 
+            }
+            }
+        }
     }
 }
