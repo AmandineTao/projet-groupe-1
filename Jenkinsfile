@@ -102,7 +102,7 @@ pipeline{
     }
   }
 
-  stage('Ansible dev') {
+  stage('Ansible prod') {
     agent any
     steps {
       withCredentials([file(credentialsId: 'pass_playbook_nodejs', variable: 'SECRET')]) {
