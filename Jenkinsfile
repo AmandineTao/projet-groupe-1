@@ -109,7 +109,7 @@ pipeline{
             colorized: true,
             extraVars: [
               namespace_default: 'prod',
-              nodeport_default: 300010
+              nodeport_default: 30010
         ]) 
       }
     }
