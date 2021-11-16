@@ -102,18 +102,21 @@ pipeline{
     }
   }
 
-  stage('Ansible prod') {
+  stage('Ansible dev') {
     agent any
     steps {
-      ansiColor('xterm') {
-        ansiblePlaybook( 
-            playbook: 'ansible/deploy.yml',
-            inventory: 'ansible/hosts.yml',
-            colorized: true,
-            extraVars: [
-              namespace_default: 'prod',
-              nodeport_default: 30010
-        ]) 
+      withCredentials([file(credentialsId: 'pass_playbook_nodejs', variable: 'SECRET')]) {
+        ansiColor('xterm') {
+          ansiblePlaybook( 
+              playbook: 'ansible/deploy.yml',
+              inventory: 'ansible/hosts.yml',
+              colorized: true,
+              extras: "--vault-password-file ${SECRET}",
+              extraVars: [
+                namespace_default: 'prod',
+                nodeport_default: 30010
+          ]) 
+        }
       }
     }
   }
