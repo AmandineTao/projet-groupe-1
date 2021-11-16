@@ -95,7 +95,8 @@ pipeline{
               extras: "--vault-password-file ${SECRET}",
               extraVars: [
                 namespace_default: 'dev',
-                nodeport_default: 30009
+                nodeport_default: 30009,
+                node_Name: 'node2'
           ]) 
         }
       }
@@ -114,7 +115,8 @@ pipeline{
               extras: "--vault-password-file ${SECRET}",
               extraVars: [
                 namespace_default: 'prod',
-                nodeport_default: 30010
+                nodeport_default: 30010,
+                node_Name: 'node3'
           ]) 
         }
       }

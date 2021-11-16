@@ -2,3 +2,4 @@ system_user: vagrant
 project_dir: /home/{{ system_user }}/kube_deploy
 namespace_default: dev
 nodeport_default: 30009
+node_Name: node2
