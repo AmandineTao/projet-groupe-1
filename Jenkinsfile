@@ -73,8 +73,8 @@ pipeline{
 	 
       // define stages for CD(Continue Deployment)
       stage('Push image on dockerhub') {
-          echo 'push the build docker image on dockerhub'
           steps {
+            echo 'push the build docker image on dockerhub'
             script {
               withCredentials([string(credentialsId: 'docker_pw', variable: 'SECRET')]) {
                 sh '''
@@ -87,8 +87,8 @@ pipeline{
         }
 
         stage('Deploy app on k8s nm dev') {
-          echo 'Deploy app on k8s on dev namespace(nm) using ansible'
           steps {
+            echo 'Deploy app on k8s on dev namespace(nm) using ansible'
             withCredentials([file(credentialsId: 'pass_playbook_nodejs', variable: 'SECRET')]) {
               ansiColor('xterm') {
                 ansiblePlaybook( 
@@ -119,16 +119,16 @@ pipeline{
         }
 
         stage("Run Jmeter") {
-          echo 'load test on dev namespace'
           steps {
+            echo 'load test on dev namespace'
             bzt "./jmeter/plan.jmx"
             perfReport 'result.csv'
           }
         }
 
         stage('Deploy app on k8s nm prod') {
-          echo 'Deploy app on k8s on prod namespace(nm) using ansible'
           steps {
+            echo 'Deploy app on k8s on prod namespace(nm) using ansible'
             withCredentials([file(credentialsId: 'pass_playbook_nodejs', variable: 'SECRET')]) {
               ansiColor('xterm') {
                 ansiblePlaybook( 
