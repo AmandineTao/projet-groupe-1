@@ -7,7 +7,7 @@ spec:
   type: NodePort
   ports:
    - protocol: TCP
-     port: 8000
+     port: {{ container_Port }}
      nodePort: {{ nodeport_default }}
   selector:
     app: nodejs-app

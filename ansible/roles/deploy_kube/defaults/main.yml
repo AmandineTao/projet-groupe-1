@@ -3,3 +3,4 @@ project_dir: /home/{{ system_user }}/kube_deploy
 namespace_default: dev
 nodeport_default: 30009
 image_name: pintade/diranenodejs
+container_Port: 8000
