@@ -1,3 +1,4 @@
+# define k8s and ansible collections to use
 collections:
   - name: kubernetes.core
     source: https://galaxy.ansible.com

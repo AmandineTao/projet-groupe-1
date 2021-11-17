@@ -1,5 +1,10 @@
+#define variables to use in tasks of this role
 system_user: vagrant
 project_dir: /home/{{ system_user }}/kube_deploy
 namespace_default: dev
 nodeport_default: 30009
 node_Name: node2
+container_Port: 8000
+docker_id: matao39
+image_name:  {{ docker_id }}/node_app_devops
+image_tag: latest

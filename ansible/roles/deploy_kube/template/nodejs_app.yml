@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: nodejs-app
-          image: matao39/node_app_devops:latest
+          image: {{ image_name }}:{{ image_tag }}
           ports:    
-            - containerPort: 8000
+            - containerPort: {{ container_Port }}
       nodeName: {{ node_Name }}
