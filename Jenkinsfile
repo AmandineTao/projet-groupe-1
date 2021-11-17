@@ -99,7 +99,7 @@ pipeline{
            steps {
               script {
                 sh '''
-                    sleep 10
+                    sleep 20
                     curl -sL -w '%{http_code}\n' http://192.168.99.11:30009 -o /dev/null | grep -q 200
                 '''
               }
