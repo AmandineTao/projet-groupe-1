@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: nodejs-app
-          image: {{ image_name }}:{{ image_tag }}
+          image: {{ image_name }}
           ports:    
             - containerPort: {{ container_Port }}
       nodeName: {{ node_Name }}

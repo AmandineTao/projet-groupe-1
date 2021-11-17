@@ -6,5 +6,4 @@ nodeport_default: 30009
 node_Name: node2
 container_Port: 8000
 docker_id: matao39
-image_name:  {{ docker_id }}/node_app_devops
-image_tag: latest
+image_name:  {{ docker_id }}/node_app_devops:latest
