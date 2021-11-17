@@ -140,8 +140,4 @@ pipeline{
 
 	
 	
-<<<<<<< HEAD
 }
-=======
-}   // end pipeline
->>>>>>> origin/develop-Amandine
