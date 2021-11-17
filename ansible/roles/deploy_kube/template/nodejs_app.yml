@@ -19,13 +19,7 @@ spec:
     spec:
       containers:
         - name: nodejs-app
-<<<<<<< HEAD
-          image: pintade/diranenodejs
-          ports:    
-            - containerPort: 8000
-=======
           image: {{ image_name }}
           ports:    
             - containerPort: {{ container_Port }}
->>>>>>> origin/develop-Amandine
       nodeName: {{ node_Name }}

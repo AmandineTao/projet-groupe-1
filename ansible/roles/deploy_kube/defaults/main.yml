@@ -1,15 +1,5 @@
-<<<<<<< HEAD
-=======
-#define variables to use in tasks of this role
->>>>>>> origin/develop-Amandine
 system_user: vagrant
 project_dir: /home/{{ system_user }}/kube_deploy
 namespace_default: dev
 nodeport_default: 30009
-<<<<<<< HEAD
-node_Name: node2
-=======
-node_Name: node2
-container_Port: 8000
-image_name: matao39/node_app_devops:latest
->>>>>>> origin/develop-Amandine
+image_name: pintade/diranenodejs
