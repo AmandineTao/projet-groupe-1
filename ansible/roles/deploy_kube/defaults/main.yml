@@ -5,5 +5,4 @@ namespace_default: dev
 nodeport_default: 30009
 node_Name: node2
 container_Port: 8000
-docker_id: matao39
-image_name:  {{ docker_id }}/node_app_devops:latest
+image_name: matao39/node_app_devops:latest
