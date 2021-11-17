@@ -2,7 +2,7 @@ pipeline{
      environment {
        IMAGE_NAME = "diranenodejs"
        IMAGE_TAG = "latest"
-	     docker_user = "pintade"
+	     DOCKER_USER = "pintade"
        IMAGE_PORT = 8000
      }
     agent any
@@ -11,7 +11,7 @@ pipeline{
 			agent any
             steps {
                 sh """
-                    docker build -t ${docker_user}/${IMAGE_NAME}:${IMAGE_TAG} .
+                    docker build -t ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG} .
                 """
             }
         }
@@ -31,7 +31,7 @@ pipeline{
 			agent any
             steps{
                 sh """
-                    docker run --name $IMAGE_NAME -d -p ${IMAGE_PORT}:8000 ${docker_user}/${IMAGE_NAME}:${IMAGE_TAG}
+                    docker run --name $IMAGE_NAME -d -p ${IMAGE_PORT}:8000 ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}
                 """
             }
         }
@@ -66,8 +66,8 @@ pipeline{
            script {
             withCredentials([string(credentialsId: 'docker_pw', variable: 'SECRET')]) {
               sh '''
-                docker login -u ${docker_user} -p ${SECRET}
-                docker image push ${docker_user}/${IMAGE_NAME}:${IMAGE_TAG}
+                docker login -u ${DOCKER_USER} -p ${SECRET}
+                docker image push ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}
               '''
             }
 			}
