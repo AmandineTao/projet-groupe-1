@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-[![Build Status](https://jenkins.pintade.duckdns.org/buildStatus/icon?job=build_app)](https://jenkins.pintade.duckdns.org/job/build_app/)
-=======
-[![Build Status](http://192.168.99.10:8080/buildStatus/icon?job=build_app)](http://192.168.99.10:8080/job/build_app/)
->>>>>>> origin/develop-Amandine
+[![Build Status](https://jenkins.pintade.duckdns.org/job/build_app/badge/icon)](https://jenkins.pintade.duckdns.org/job/build_app/)
 
 # Group 1 : eazytraining node's app CICD
 
