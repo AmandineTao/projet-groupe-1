@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: nodejs-app
-          image: pintade/diranenodejs
+          image: matao39/node_app_devops:latest
           ports:    
             - containerPort: 8000
       nodeName: {{ node_Name }}
