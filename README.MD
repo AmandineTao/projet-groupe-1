@@ -181,7 +181,6 @@ Pour suivre l’utilisation de nos ressources et du déploiement nous avons cré
 
 La publication du site web s’est basée sur une infrastructure déjà existante et donc n’a pas été intégrée à la chaîne CD. L’infrastructure se base sur un container hébergeant “let’s encrypt” pour signer le certificat tls et enregistrer l’ip dynamique sur le domaine pintade.duckdns.org. Ensuite un deuxième containeur basé sur image caddy server pour être utilisé en tant que reverse proxy vers l’ip de la machine windows où sont contenus les vm hébergeant l’application nodeJs. La redirection de port windows étant configurée pour pointer vers l’ip de l’une des vm client avec le nodeport associé à la production.
 
-L’adresse du site est: <https://devops.pintade.duckdns.org/>
 
 Conclusion
 ==========
