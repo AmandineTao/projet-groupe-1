@@ -1,8 +1,8 @@
 pipeline{
      environment {
-       IMAGE_NAME = "node_app_devops"
+       IMAGE_NAME = "diranenodejs"
        IMAGE_TAG = "latest"
-	     docker_user = "matao39"
+	     docker_user = "pintade"
        IMAGE_PORT = 8000
      }
     agent any
@@ -106,6 +106,14 @@ pipeline{
            }
 		   }
 
+  stage("Run Jmeter") {
+    agent any
+    steps {
+      bzt "./jmeter/plan.jmx"
+      perfReport 'result.csv'
+    }
+  }
+
   stage('Ansible prod') {
     agent any
     steps {
@@ -125,6 +133,7 @@ pipeline{
       }
     }
   }
+
 	 
     }
 	  

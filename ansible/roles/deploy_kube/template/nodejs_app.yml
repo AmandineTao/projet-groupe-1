@@ -5,7 +5,7 @@ metadata:
   namespace: {{ namespace_default }}
   labels:
     app: nodejs-app
-    env: dev
+    env: {{ namespace_default }}
 spec:
   replicas: 2
   selector:
