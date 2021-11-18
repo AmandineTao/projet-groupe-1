@@ -1,6 +1,6 @@
 ---
 - hosts: server
-  name: preinstall
+  name: install
   vars_files:
     - files/secrets/credentials.yaml
   vars:
